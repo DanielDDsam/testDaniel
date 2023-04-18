@@ -1,0 +1,62 @@
+  h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  #question {
+    font-size: 100px;
+    margin-bottom: 20px;
+  }
+  
+  #options {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+
+  
+
+
+  
+  #next:hover {
+    background-color: #08fc10;
+    color: white;
+  }
+  
+  .container-cuestionario {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    background-image: url(./assets/Leonardo_Diffusion_fondo_negro_metlico_gris_minimalista_4k_1.jpg);
+    padding: 35px;
+    border-radius: 20px;
+    margin-top: 5rem;
+  }
+  .container-cuestionario button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 60%;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  .container-cuestionario p{
+    font-size: 37px;
+    color: white;
+  }
+  .container-cuestionario#next {
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+  }
+  #correct {
+    background-color: #8BC34A;
+  }
+  #incorrect {
+    background-color: #F44336;
+  }

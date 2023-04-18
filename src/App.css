@@ -1,0 +1,262 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 96%;
+  margin: 2rem auto;
+}
+.form-container {
+  background-image: url(./assets/Leonardo_Diffusion_fondo_negro_metlico_gris_minimalista_4k_1.jpg);
+  background-size: cover;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  min-height: 400PX;
+  max-height: 600PX;
+  font-weight: bold;
+  max-width:700px;
+ 
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+.close{
+   background: red !important;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.questionsInput, .option-input input[type="text"], select {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 10px;
+  
+}
+
+.questionsInput {
+  background-color: #444;
+  color: #fff;
+  width: 95%;
+}
+
+.option-input input[type="text"] {
+  background-color: #eee;
+  color: #333;
+}
+
+.defaultQuestion {
+  background-color: #eee;
+  color: #333;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 30px;
+}
+
+button[type="button"], button[type="submit"] {
+  background: linear-gradient(to right, #1d05f8, #453a94);
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: background-color s ease-in-out;
+}
+
+button[type="button"]:hover, button[type="submit"]:hover {
+  background-image: linear-gradient(to right, #453a94, #1d05f8);
+}
+
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 2rem;
+  width: 55% !important;
+}
+
+.card {
+ 
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  margin-right: 20px;
+  margin-bottom: 20px;
+  width: 250px;
+  height: 150px;
+  transition: all 0.3s ease-in-out;
+
+  }
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+.card h2 {
+  font-size: 23px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 19px;
+  margin-top: 2rem;
+  margin-bottom: 0;
+}
+.error-message {
+  background-color: red;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 49%;
+  animation: slideInFromLeft 0.5s ease-in-out;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.container-formUser {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 10%;
+  border-radius: 10px;
+  background-image: url(./assets/Leonardo_Diffusion_fondo_negro_metlico_gris_minimalista_4k_1.jpg);
+}
+
+
+.form {
+  position: relative;
+  width: 20rem;
+  height: 3rem;
+  left: -10px;
+  margin-top: 20px;
+}
+
+.form__input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #e1e5ee;
+  border-radius: 0.5rem;
+  
+  font-size: 39px;
+  color: white;
+  outline: none;
+  padding: 1.25rem;
+  background: none;
+}
+
+.form__input:hover {
+  border-color: #adffff;
+}
+
+.form__input:focus {
+  border-color: #18ffff;
+}
+
+.form__label {
+  position: absolute;
+  left: 1rem;
+  top: 0.8rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 0 0.5rem;
+  color: white;
+  cursor: text;
+  -webkit-transition: top 200ms ease-in, left 200ms ease-in,
+    font-size 200ms ease-in;
+  transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+  background-color: #17181D;
+}
+
+.form__input:focus ~ .form__label,
+.form__input:not(:placeholder-shown).form__input:not(:focus) ~ .form__label {
+  top: -0.5rem;
+  font-size: 0.8rem;
+  left: 0.8rem;
+}
+.heroUser{
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 40px;
+}
+.button-sendTest {
+  display: flex;
+  padding: 20px 30px;
+  font-size: 19px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background-color: #ff6347;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: background-color 0.2s ease-in-out;
+ 
+}
+
+.button-sendTest:hover {
+  background-color: #ff7f50;
+}
+.container-formTerminado {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem;
+  color: white;
+}
+
+.container-formTerminado h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.container-formTerminado p {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.container-formTerminado a {
+  font-size: 1.5rem;
+  text-decoration: underline;
+  color: #0077FF;
+  border: 2px;
+  padding: 16px;
+  border-radius: 2px;
+  background-color: white;
+}
