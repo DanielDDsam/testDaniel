@@ -10,7 +10,7 @@ function Question() {
   const [questions, setQuestions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const location = useLocation();
-  const creator = (location.pathname.split('/')[2]).slice(1, );
+  const creator = (location.pathname.split('/')[2]);
   
 
   const getTest = async () => {
