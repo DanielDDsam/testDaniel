@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { sendQuestionsToFirestore } from './config';
 import { getQuestions } from './config';
+import { getParticipants } from './config';
 import { Link } from 'react-router-dom';
 import '../App.css'
 
@@ -53,10 +54,11 @@ function OptionInput({ option, options, setOptions, index }) {
 function QuestionForm() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [sendTest, setSendTest] = useState(false);
-  
+  const [participantsList, setParticipantsList] = useState([]);
 const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState('');
-  const [options, setOptions] = useState(['', '']);
+  const [error, setError] = useState(false);
+  const [options, setOptions] = useState(['', '', '', '']);
   const [answer, setAnswer] = useState('');
   const [testEnviado, setTestEnviado] = useState(false);
   const [testEnviado2, setTestEnviado2] =  useState(() => {
@@ -67,43 +69,54 @@ const [questions, setQuestions] = useState([]);
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : "";
   });
-  const defaultQuestions = [ 
+  const defaultQuestions = [
     {
-      question: "Si " + user + " fuera un superhéroe, ¿cuál sería su nombre?",
-      options: ["Capitán Fantástico", "Hombre Araña", "La Mujer Maravilla", "El Increíble Hulk"]
+    question: "Si " + user + " pudiera tener una cena con cualquier personaje histórico, ¿a quién elegiría?",
+    options: ["Albert Einstein", "Nelson Mandela", "Cleopatra", "Leonardo da Vinci"]
     },
     {
-      question: "¿Qué comida le da energía a " + user + " para empezar el día?",
-      options: ["Café y tostadas", "Batido de frutas y yogur", "Huevos revueltos con jamón", "Cereal con leche"]
+    question: "¿Cuál es la película favorita de " + user + " de todos los tiempos?",
+    options: ["El Padrino", "Forrest Gump", "El Señor de los Anillos", "El Rey León"]
     },
     {
-      question: "Si " + user + " tuviera que elegir un solo objeto para llevar a una isla desierta, ¿cuál sería?",
-      options: ["Un cuchillo multiuso", "Un libro interesante", "Un mapa detallado", "Un teléfono satelital"]
+    question: "Si " + user + " pudiera tener un súper poder por un día, ¿cuál elegiría?",
+    options: ["Volar", "Ser invisible", "Teletransportarse", "Controlar el fuego"]
     },
     {
-      question: "Si " + user + " pudiera aprender un nuevo idioma en un instante, ¿cuál elegiría?",
-      options: ["Japonés", "Francés", "Alemán", "Mandarín"]
+    question: "¿Cuál es el deporte favorito de " + user + " para ver o practicar?",
+    options: ["Fútbol", "Baloncesto", "Tenis", "Natación"]
     },
     {
-      question: "¿Cuál sería la mascota ideal para " + user + "?",
-      options: ["Un perro", "Un gato ", "Un pez tranquilo y relajante", "Un conejillo de indias "]
-    },
-  
-    {
-      question: "¿Cuál sería el trabajo ideal para " + user + " si el dinero no fuera un problema?",
-      options: ["Viajero profesional", "Chef de renombre mundial", "Director de cine de culto", "Escritor exitoso"]
+    question: "Si " + user + " pudiera tener una habilidad especial, ¿cuál sería?",
+    options: ["Cocinar como un chef profesional", "Tocar un instrumento musical", "Ser un gran bailarín", "Hablar varios idiomas"]
     },
     {
-      question: "¿En qué ciudad del mundo te gustaría vivir si fueras " + user + "?",
-      options: ["Londres, la ciudad de la realeza y el té de las cinco", "Nueva York, la ciudad que nunca duerme", "Sídney, la joya de Australia", "Río de Janeiro, la ciudad del carnaval"]
+    question: "¿Cuál es la mayor meta profesional de " + user + "?",
+    options: ["Ganar un premio importante", "Ser dueño de su propia empresa", "Publicar un libro", "Ser reconocido en su campo"]
     },
     {
-      question: "¿Cuál sería el súper poder que " + user + " elegiría tener?",
-      options: ["Invisibilidad", "Teletransportación", "Controlar el tiempo", "Leer la mente"]
+    question: "¿Qué lugar en el mundo " + user + " quiere visitar antes de morir?",
+    options: ["La Gran Muralla China", "Las Pirámides de Egipto", "Machu Picchu", "Las playas de Tailandia"]
     },
     {
-      question: "¿Cuál sería la banda sonora de la vida de " + user + "?",
-      options: ["Queen, con su energía y estilo inigualable", "The Beatles, con su música atemporal y letras profundas", "Radiohead, con su sonido experimental y emocional", "Coldplay, con su pop suave y pegajoso"]
+    question: "¿Cuál es la comida favorita de " + user + " de todos los tiempos?",
+    options: ["Pizza", "Sushi", "Lasagna", "Tacos"]
+    },
+    {
+    question: "¿Cuál es el programa de televisión favorito de " + user + " en este momento?",
+    options: ["Juego de Tronos", "Stranger Things", "The Crown", "Breaking Bad"]
+    },
+    {
+    question: "¿Cuál es la cosa más valiosa que " + user + " posee en este momento?",
+    options: ["Un objeto de valor sentimental", "Un logro importante", "Un objeto de valor financiero", "Una relación personal"]
+    },
+    {
+    question: "¿Cuál es el mejor regalo que " + user + " ha recibido en su vida?",
+    options: ["Un viaje inolvidable", "Un objeto personalizado", "Una experiencia única", "Un gesto de amor"]
+    },
+    {
+    question: "Si " + user + " pudiera vivir en cualquier época de la historia, ¿cuál elegiría?",
+    options: ["La época medieval", "La época victoriana", "La década de 1920", "Los años 60"]
     },
 ];
 
@@ -129,6 +142,17 @@ function getRandomColor() {
   return colors[randomIndex];
 }
 const [randomColors, setRandomColors] = useState([]);
+
+useEffect(() => {
+  const savedColors = localStorage.getItem("randomColors");
+  if (savedColors) {
+    setRandomColors(JSON.parse(savedColors));
+  }
+}, []);
+
+useEffect(() => {
+  localStorage.setItem("randomColors", JSON.stringify(randomColors));
+}, [randomColors]);
 const handleColors = () => {
   
   const newColors = [];
@@ -146,10 +170,14 @@ const handleColors = () => {
     setAnswer(event.target.value);
   };
   const handleCrearTest = () => {
-    const link = `${window.location.origin}/questions/${user}`;
-    console.log(link); // Aquí puedes mostrar el enlace en la pantalla
-    setTestEnviado2(true);
+    if(questions.length >8){
+      const link = `${window.location.origin}/questions/${user}`;
+      console.log(link); // Aquí puedes mostrar el enlace en la pantalla
+      setTestEnviado2(true);
+    }else setError(true);
   }
+   
+  
   const handleSendTest = () => {
     setUser(document.getElementById("user").value);
     setSendTest(true);
@@ -170,6 +198,13 @@ const handleColors = () => {
   }
 
   };
+  const fetchParticipants = async () => {
+    const result = await getParticipants(user);
+    setParticipantsList(result.docs.map((doc) => doc.data()));
+  };
+  useEffect(() => {
+    fetchParticipants();
+  }, [user]);
   const updateQuestions = async () => {
     const querySnapshot = await getQuestions(user);
     const questionsArray = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -227,6 +262,22 @@ const handleColors = () => {
           <a href={`${window.location.origin}/questions/${user}`}>
       {`${window.location.origin}/questions/${user}`}
     </a>
+    <table>
+          <thead>
+            <tr>
+              <th>Participante</th>
+              <th>Puntaje</th>
+            </tr>
+          </thead>
+          <tbody>
+            {participantsList.map((participant) => (
+              <tr key={participant.participante}>
+                <td>{participant.participante}</td>
+                <td>{participant.score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         </div>
         
       )}
@@ -282,6 +333,7 @@ const handleColors = () => {
       </div>
      
       {formSubmitted && question.trim() === '' && <p className="error-message">Debes ingresar una pregunta</p>}
+      {error && <p className="error-message">Mínimo 9 preguntas</p>}
 
       
       </div>
@@ -294,7 +346,7 @@ const handleColors = () => {
   {questions.map((question, k) => (
     <div key={question.id} className="card" style={{ backgroundColor: randomColors[k] }}>
       <h2>{question.question}</h2>
-      <p>Respuesta: {question.answer.slice(0, -1)}</p>
+      <p>Respuesta: {(question.answer).slice(0, -1)}</p>
     </div>
   ))}
 </div>
